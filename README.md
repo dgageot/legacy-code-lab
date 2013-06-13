@@ -11,9 +11,7 @@ Plus d'information sur [la page du sujet](http://www.devoxx.com/display/FR13/Str
 
 ## Pré-requis
 
-* Un ordinateur avec un environnement de développement java.
-* le cordon d'alimentation du portable sus-mentioné ;)
-* Un jdk 6
-* Maven ou un IDE le gérant
-
-
+ * Un ordinateur avec un environnement de développement java.
+ * le cordon d'alimentation du portable sus-mentioné ;)
+ * Un jdk 6 ou 7
+ * Maven ou un IDE le gérant
