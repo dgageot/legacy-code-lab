@@ -31,7 +31,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
   private final ITransactionManagerService transactionManagerService = DataAccessService.getTransactionManagerService();
 
   @Override
-  public CheckResult<HedgingPosition> initAndSendHedgingPosition(HedgingPosition hp) throws ARPSystemException {
+  public CheckResult<HedgingPosition> initAndSendHedgingPosition(HedgingPosition hp) {
     CheckResult<HedgingPosition> result = new CheckResult<HedgingPosition>();
     try {
       hp = initHedgingPosition(hp);
@@ -43,7 +43,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
       result.setCheckIsOk(false);
       try {
         updateHedgingPosition(hp);
-      } catch (ARPSystemException e1) {
+      } catch (Exception e1) {
         LOGGER.log(Level.SEVERE, errorMsg, e1);
       }
       return result;
@@ -59,7 +59,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
         hp.setStatus(HedgingPositionStatusConst.REJECTED);
         updateHedgingPosition(hp);
       }
-    } catch (ARPSystemException e) {
+    } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
     }
     return result;
@@ -217,6 +217,4 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
       return "autobot";
     }
   }
-
-
 }
