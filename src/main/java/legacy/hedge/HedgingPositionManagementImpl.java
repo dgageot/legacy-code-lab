@@ -107,7 +107,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
   }
 
   private HedgingPosition updateHedgingPosition(HedgingPosition hp) {
-    HedgingPosition hpUpdate = SerializationUtils.clone(hp);
+    HedgingPosition hpUpdate = hp.copy();
     try {
       if (hp.getType().equals(HedgingPositionTypeConst.INI)) {
         hpUpdate.setTransactionId(hp.getTransactionId());

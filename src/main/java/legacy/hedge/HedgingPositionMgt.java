@@ -22,7 +22,7 @@ public class HedgingPositionMgt {
     CheckResult<HedgingPosition> result = new CheckResult<HedgingPosition>();
     ToweringXMLHTTPServiceClient.sendTicketToTowering(new InputEvent(hp));
     result.setCheckIsOk(true);
-    result.setResult(SerializationUtils.clone(hp));
+    result.setResult(hp.copy());
     return result;
   }
 }
