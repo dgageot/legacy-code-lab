@@ -35,8 +35,6 @@ public class HedgingPosition extends BaseDTO implements Position {
   @AuditedField
   private Date valueDate;
   @AuditedField
-  private Date noticePeriodEndDate;
-  @AuditedField
   private String combck;
   @AuditedField
   private int codetyptkt;
@@ -64,14 +62,6 @@ public class HedgingPosition extends BaseDTO implements Position {
   private Date datefinthe;
 
   private BigInteger codtyptra = new BigInteger("42");
-  /**
-   * *********************** Return Code Type *************
-   */
-  private String msgdev;
-
-  private String msgerr;
-  private Integer niverr;
-  private String msgusr;
   private String ikRtH;
   private String hedgingTransactionId;
 
@@ -130,11 +120,7 @@ public class HedgingPosition extends BaseDTO implements Position {
 
   @Override
   public Date getNoticePeriodEndDate() {
-    return noticePeriodEndDate;
-  }
-
-  public void setNoticePeriodEndDate(Date noticePeriodEndDate) {
-    this.noticePeriodEndDate = noticePeriodEndDate;
+    return null;
   }
 
   // TODO: Rename this to CombockArray
@@ -213,38 +199,22 @@ public class HedgingPosition extends BaseDTO implements Position {
 
   @Override
   public String getMsgdev() {
-    return msgdev;
-  }
-
-  public void setMsgdev(String msgdev) {
-    this.msgdev = msgdev;
+    return getMsgusr();
   }
 
   @Override
   public String getMsgerr() {
-    return msgerr;
-  }
-
-  public void setMsgerr(String msgerr) {
-    this.msgerr = msgerr;
+    return "FATAL ERROR";
   }
 
   @Override
   public Integer getNiverr() {
-    return niverr;
-  }
-
-  public void setNiverr(Integer niverr) {
-    this.niverr = niverr;
+    return 0;
   }
 
   @Override
   public String getMsgusr() {
-    return msgusr;
-  }
-
-  public void setMsgusr(String msgusr) {
-    this.msgusr = msgusr;
+    return "Hedging position";
   }
 
   @Override
