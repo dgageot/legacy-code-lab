@@ -13,7 +13,7 @@ import legacy.service.*;
 
 /**
  * <p>
- * Title: legacy.hedge.HPMgtImpl
+ * Title: legacy.hedge.HPManager
  * </p>
  * <p/>
  * Description: This is the main calculation "hub" of the Polka Application, this
@@ -25,12 +25,11 @@ import legacy.service.*;
  * @version 17.3b4 (revision b)
  * @creationDate October 17, 2012
  */
-public class HedgingPositionManagementImpl implements IHedgingPositionManagement {
-  private static final Logger LOGGER = Logger.getLogger(HedgingPositionManagementImpl.class.getName());
+public class HedgingPositionManager {
+  private static final Logger LOGGER = Logger.getLogger(HedgingPositionManager.class.getName());
 
-  private final ITransactionManagerService transactionManagerService = DataAccessService.getTransactionManagerService();
+  private final ITransactionManagerService transactionManager = DataAccessService.getTransactionManagerService();
 
-  @Override
   public CheckResult<HedgingPosition> initAndSendHedgingPosition(HedgingPosition hp) {
     CheckResult<HedgingPosition> result = new CheckResult<HedgingPosition>();
     try {
@@ -52,11 +51,11 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
       result = hedgePositionBySendTo3rdParty(hp);
       if (result.isCheckIsOk()) {
         hp = result.getResult();
-        hp.setStatus(HedgingPositionStatusConst.HEDGED);
+        hp.setStatus(HedgingPositionStatus.HEDGED);
         updateHedgingPosition(hp);
       } else {
         hp = result.getResult();
-        hp.setStatus(HedgingPositionStatusConst.REJECTED);
+        hp.setStatus(HedgingPositionStatus.REJECTED);
         updateHedgingPosition(hp);
       }
     } catch (Exception e) {
@@ -70,7 +69,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
       LOGGER.log(Level.FINEST, "Begin 3r party processing. stand by");
     }
     CheckResult<HedgingPosition> result;
-    result = HedgingPositionMgt.hedgingPositionMgt(hp);
+    result = HedgingPositionSender.sendToTowering(hp);
     if (LOGGER.isLoggable(Level.FINEST)) {
       LOGGER.log(Level.FINEST, "3r party processing is now finished, thank you for your patience"); // t'es con michel
     }
@@ -80,16 +79,16 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
   private HedgingPosition updateHedgingPosition(HedgingPosition hp) {
     HedgingPosition hpUpdate = hp.copy();
     try {
-      if (hp.getType().equals(HedgingPositionTypeConst.INI)) {
+      if (hp.getType().equals(HedgingPositionType.INI)) {
         hpUpdate.setTransactionId(hp.getTransactionId());
         Modif modif = new Modif();
         modif.setModificationDate(new Date());
         hp.setLastModification(modif);
         hp.setStorageUpdate(StorageActionEnum.CREATE);
-        hpUpdate = transactionManagerService.classStorageAction(hp);
+        hpUpdate = transactionManager.classStorageAction(hp);
       } else {
         hp.setStorageUpdate(StorageActionEnum.UPDATE);
-        hpUpdate = transactionManagerService.classStorageAction(hp);
+        hpUpdate = transactionManager.classStorageAction(hp);
       }
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
@@ -115,7 +114,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
     }
 
     String hedgingTransactionId = new String();
-    if (!HedgingPositionTypeConst.INI.equals(hp.getType())) {
+    if (!HedgingPositionType.INI.equals(hp.getType())) {
       hedgingTransactionId = hpdas.getHedgingTransactionIdByTransactionId(transaction.getId());
     }
     String userIni = getUser();
@@ -211,10 +210,6 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
 
   private String getUser() {
     User user = UserSessionsManager.getInstance().getCurrentUser();
-    if (user != null) {
-      return user.getName();
-    } else {
-      return "autobot";
-    }
+    return user == null ? "autobot" : user.getName();
   }
 }

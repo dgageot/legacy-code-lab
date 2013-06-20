@@ -10,15 +10,15 @@ import com.google.common.annotations.*;
 
 /**
  * <p>
- * Title: legacy.hedge.HedgingPositionMgt
+ * Title: legacy.hedge.HedgingPositionSender
  * </p>
  *
  * @author rDumas
  * @version 1.3
  * @creationDate May 7, 2011
  */
-public class HedgingPositionMgt {
-  public static CheckResult<HedgingPosition> hedgingPositionMgt(HedgingPosition hp) {
+public class HedgingPositionSender {
+  public static CheckResult<HedgingPosition> sendToTowering(HedgingPosition hp) {
     CheckResult<HedgingPosition> result = new CheckResult<HedgingPosition>();
     ToweringXMLHTTPServiceClient.sendTicketToTowering(new InputEvent(hp));
     result.setCheckIsOk(true);

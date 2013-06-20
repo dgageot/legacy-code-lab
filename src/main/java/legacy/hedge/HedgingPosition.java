@@ -29,9 +29,9 @@ public class HedgingPosition extends BaseDTO implements Position {
   @AuditedField
   private int transactionId;
   @AuditedField
-  private HedgingPositionTypeConst type = HedgingPositionTypeConst.INI;
+  private HedgingPositionType type = HedgingPositionType.INI;
   @AuditedField
-  private HedgingPositionStatusConst status;
+  private HedgingPositionStatus status;
   @AuditedField
   private Date valueDate;
   @AuditedField
@@ -100,22 +100,22 @@ public class HedgingPosition extends BaseDTO implements Position {
   /**
    * @return type
    */
-  public HedgingPositionTypeConst getType() {
+  public HedgingPositionType getType() {
     return type;
   }
 
   /**
    * @param type the type to set
    */
-  public void setType(HedgingPositionTypeConst type) {
+  public void setType(HedgingPositionType type) {
     this.type = type;
   }
 
-  public HedgingPositionStatusConst getStatus() {
+  public HedgingPositionStatus getStatus() {
     return status;
   }
 
-  public void setStatus(HedgingPositionStatusConst status) {
+  public void setStatus(HedgingPositionStatus status) {
     this.status = status;
   }
 
