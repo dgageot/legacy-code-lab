@@ -150,7 +150,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
     String userIni = getUser();
     hp.setIkRtH(userIni);
     switch (hp.getType()) {
-      case INI: {
+      case INI:
         String transactionWay = new String();
         switch (transaction.getWay()) {
           case LONG:
@@ -164,7 +164,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
         }
         int bodCode = 0;
         Integer stock = DataAccessService.getAnalyticalService().getRetrieveStockByActiveGK(transaction.getId(), transactionWay);
-        TradingOrder evt = hpdas.getTrade(transaction.getId());
+        TradingOrder evt1 = hpdas.getTrade(transaction.getId());
         boolean isStockForbidden = false;
         if (stock == null) {
           isStockForbidden = true;
@@ -180,14 +180,14 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
         hp.setTransactionWay(transactionWay);
         hp.setCodetyptkt(34);
         hp.setCodtyptra(BigInteger.valueOf(bodCode));
-        hp.setQuantity(String.valueOf(evt.getPrice().getQuantity()));
-        hp.setBasprx(evt.getPrice().getFxPrice() / 100);
-        hp.setPrxref(evt.getPrice().getFxPrice());
+        hp.setQuantity(String.valueOf(evt1.getPrice().getQuantity()));
+        hp.setBasprx(evt1.getPrice().getFxPrice() / 100);
+        hp.setPrxref(evt1.getPrice().getFxPrice());
         hp.setCombck(combck);
         /*********************************** INPUT EVENT DATA *********************/
         hp.setTransactionId(transaction.getId());
         hp.setValueDate(valueDate);
-      }
+        break;
       case CANCEL_TRANSACTION:
         /*********************************** INPUT DEAL DATA *********************/
         String hedgingPositionId = hpdas.getHedgingPositionIdByPositionKey(transaction.getPositionKey());
