@@ -20,7 +20,7 @@ import com.google.common.annotations.*;
 public class HedgingPositionSender {
   public static CheckResult<HedgingPosition> sendToTowering(HedgingPosition hp) {
     CheckResult<HedgingPosition> result = new CheckResult<HedgingPosition>();
-    ToweringXMLHTTPServiceClient.sendTicketToTowering(new InputEvent(hp));
+    //ToweringXMLHTTPServiceClient.sendTicketToTowering(new InputEvent(hp));
     result.setCheckIsOk(true);
     result.setResult(hp.copy());
     return result;
