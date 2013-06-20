@@ -1,28 +1,15 @@
 package legacy.hedge;
 
+import java.math.*;
+import java.util.*;
+import java.util.logging.*;
+
 import legacy.*;
-import legacy.dto.Modif;
-import legacy.security.User;
-import legacy.error.ARPSystemException;
-import legacy.error.CheckResult;
-import legacy.dto.Book;
-import legacy.security.UserSessionsManager;
-import legacy.service.DataAccessService;
-import legacy.service.IHedgingPositionDataAccessService;
-import legacy.service.ITradingDataAccessService;
-import legacy.service.ITransactionManagerService;
-import legacy.service.TradingOrder;
-import legacy.dto.Transaction;
-import legacy.persistence.StorageActionEnum;
-
-import org.apache.commons.lang3.SerializationUtils;
-
-import java.math.BigInteger;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.google.common.annotations.*;
+import legacy.dto.*;
+import legacy.error.*;
+import legacy.persistence.*;
+import legacy.security.*;
+import legacy.service.*;
 
 /**
  * <p>
@@ -69,23 +56,7 @@ public class HedgingPositionManagementImpl implements IHedgingPositionManagement
         updateHedgingPosition(hp);
       } else {
         hp = result.getResult();
-        switch (hp.getErrorLevel()) {
-          case FUNCTIONAL_ERROR: {
-            hp.setStatus(HedgingPositionStatusConst.REJECTED);
-            break;
-          }
-          case CONNECT_ERROR: {
-            hp.setStatus(HedgingPositionStatusConst.REJECTED);
-            break;
-          }
-          case BOOKING_MALFUNCTION: {
-            //TO DO
-            break;
-          }
-          default: {
-            break;
-          }
-        }
+        hp.setStatus(HedgingPositionStatusConst.REJECTED);
         updateHedgingPosition(hp);
       }
     } catch (ARPSystemException e) {

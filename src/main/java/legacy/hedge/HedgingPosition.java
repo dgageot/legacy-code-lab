@@ -1,13 +1,11 @@
 package legacy.hedge;
 
-import legacy.dto.ErrorLevel;
-import legacy.persistence.AuditedField;
-import legacy.persistence.BaseDTO;
-import legacy.persistence.StorageActionEnum;
-import legacy.service.Position;
+import java.math.*;
+import java.util.*;
 
-import java.math.BigInteger;
-import java.util.Date;
+import legacy.dto.*;
+import legacy.persistence.*;
+import legacy.service.*;
 
 import org.apache.commons.lang3.*;
 
@@ -44,8 +42,6 @@ public class HedgingPosition extends BaseDTO implements Position {
   private int codetyptkt;
 
   private String transactionWay;
-
-  private ErrorLevel errorLevel;
 
   //private int assetCopy;
   private String hedgeMsg;
@@ -253,11 +249,7 @@ public class HedgingPosition extends BaseDTO implements Position {
 
   @Override
   public ErrorLevel getErrorLevel() {
-    return errorLevel;
-  }
-
-  public void setErrorLevel(ErrorLevel errorLevel) {
-    this.errorLevel = errorLevel;
+    return ErrorLevel.FATAL_ERROR;
   }
 
   @Override
