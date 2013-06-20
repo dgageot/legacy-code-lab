@@ -1,38 +1,27 @@
 package legacy.json;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import legacy.hedge.HedgingPosition;
+import java.io.*;
 
-import java.io.File;
-import java.io.IOException;
+import legacy.hedge.*;
 
-import static com.google.common.base.Throwables.propagate;
+import com.google.common.base.*;
+import com.google.common.io.*;
+import com.google.gson.*;
 
 public class HedgingPositionSerializer {
-    private final Gson gson;
-
-    public HedgingPositionSerializer() {
-        gson = new GsonBuilder().create();
+  public HedgingPosition fromJson(File input) {
+    try {
+      return new Gson().fromJson(Files.readFirstLine(input, Charsets.UTF_8), HedgingPosition.class);
+    } catch (IOException e) {
+      throw Throwables.propagate(e);
     }
+  }
 
-    public HedgingPosition fromJson(File inputFile) {
-        try {
-            return gson.fromJson(Files.readFirstLine(inputFile, Charsets.UTF_8), HedgingPosition.class);
-        } catch (IOException ioe) {
-            propagate(ioe);
-            return null; // unreachable code
-        }
+  public void toJson(HedgingPosition hedgingPosition, File output) {
+    try {
+      Files.write(new Gson().toJson(hedgingPosition), output, Charsets.UTF_8);
+    } catch (IOException e) {
+      throw Throwables.propagate(e);
     }
-
-    public void toJson(HedgingPosition hedgingPosition, File outputFile) {
-        try {
-            Files.write(gson.toJson(hedgingPosition),outputFile,Charsets.UTF_8);
-        } catch (IOException ioe) {
-            propagate(ioe);
-        }
-    }
-
+  }
 }
