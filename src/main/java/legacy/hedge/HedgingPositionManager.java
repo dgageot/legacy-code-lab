@@ -4,7 +4,7 @@ import java.math.*;
 import java.util.*;
 import java.util.logging.*;
 
-import legacy.*;
+import legacy.dates.*;
 import legacy.dto.*;
 import legacy.error.*;
 import legacy.persistence.*;

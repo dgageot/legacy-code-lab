@@ -1,4 +1,4 @@
-package legacy;
+package legacy.dates;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 
 /**
  * <p>
- *     Title: legacy.DateTimeUtils
+ *     Title: legacy.dates.DateTimeUtils
  * </p>
  *
  * <p>utilities for date time</p>
